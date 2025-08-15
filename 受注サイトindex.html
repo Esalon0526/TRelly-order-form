@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>受注表</title>
+    <style>
+        body {
+            font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #2c5282;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            color: #2c5282;
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 15px;
+            margin: 0 0 15px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2d3748;
+            font-size: 14px;
+        }
+        
+        input, select, textarea {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .items-table th {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .items-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .items-table tr:hover {
+            background-color: #f7fafc;
+        }
+        
+        .add-item-btn {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: transform 0.2s ease;
+        }
+        
+        .add-item-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 16px;
+        }
+        
+        .total-row.final {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c5282;
+            border-top: 2px solid #2c5282;
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: transform 0.2s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 161, 105, 0.3);
+        }
+        
+        .order-summary {
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .summary-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .summary-section:last-child {
+            border-bottom: none;
+        }
+        
+        .order-complete {
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        .complete-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .complete-section:last-child {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .items-table {
+                font-size: 12px;
+            }
+            
+            .items-table th, .items-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>受注表</h1>
+            <p style="margin: 10px 0 0 0; color: #718096;">Order Form</p>
+        </div>
+        
+        <form id="orderForm">
+            <div class="form-section">
+                <h2 class="section-title">📝 基本情報</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="orderNumber">受注番号 *</label>
+                        <input type="text" id="orderNumber" name="orderNumber" readonly style="background-color: #f7fafc; color: #2d3748; font-weight: bold;">
+                    </div>
+                    <div class="form-group">
+                        <label for="orderDate">受注日 *</label>
+                        <input type="date" id="orderDate" name="orderDate" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2 class="section-title">🏢 お客様情報</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="customerName">お客様名 *</label>
+                        <input type="text" id="customerName" name="customerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postalCode">郵便番号</label>
+                        <input type="text" id="postalCode" name="postalCode" placeholder="123-4567">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="customerAddress">住所</label>
+                        <input type="text" id="customerAddress" name="customerAddress">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">電話番号</label>
+                        <input type="tel" id="customerPhone" name="customerPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail">メールアドレス</label>
+                        <input type="email" id="customerEmail" name="customerEmail">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2 class="section-title">📦 受注商品</h2>
+                <table class="items-table" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>商品選択</th>
+                            <th>商品名</th>
+                            <th>数量</th>
+                            <th>単価（円）</th>
+                            <th>小計（円）</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody">
+                        <tr>
+                            <td>
+                                <select class="product-select" style="width: 100%; border: none; background: transparent; padding: 8px;" onchange="selectProduct(this)">
+                                    <option value="">商品を選択...</option>
+                                </select>
+                            </td>
+                            <td class="item-name" style="padding: 12px; font-weight: 500;">-</td>
+                            <td><input type="number" class="item-quantity" min="1" value="1" style="width: 100%; border: none; background: transparent; text-align: center;" oninput="calculateSubtotal(this)"></td>
+                            <td class="item-price" style="text-align: right; font-weight: 500;">¥0</td>
+                            <td class="item-subtotal" style="text-align: right; font-weight: bold;">¥0</td>
+                            <td><button type="button" onclick="removeItem(this)" style="background: #e53e3e; color: white; border: none; padding: 5px 10px; bord
